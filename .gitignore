@@ -1,3 +1,4 @@
 .cache
 .ipynb*
 .env
+OAI_CONFIG_LIST
