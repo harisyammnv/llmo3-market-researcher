@@ -1,7 +1,7 @@
 import os
 import requests
 from langchain.text_splitter import RecursiveCharacterTextSplitter
-from langchain import PromptTemplate
+from langchain.prompts import PromptTemplate
 from langchain.chains.summarize import load_summarize_chain
 from bs4 import BeautifulSoup
 from langchain.chat_models import ChatOpenAI
@@ -19,10 +19,10 @@ load_dotenv()
 brwoserless_api_key = os.getenv("BROWSERLESS_API_KEY")
 serper_api_key = os.getenv("SERP_API_KEY")
 airtable_api_key = os.getenv("AIRTABLE_API_KEY")
-config_list = config_list_from_json("OAI_CONFIG_LIST")
+config_list = config_list_from_json("openai_config")
 
 
-# ------------------ Create functions ------------------ #
+# # ------------------ Create functions ------------------ #
 
 # Function for google search
 def google_search(search_keyword):    
