@@ -8,11 +8,13 @@ authors = ["HarisyamManda <mnv.harisyam@gmail.com>"]
 python = ">=3.11,<3.12"
 openai = "^1.6.0"
 langchain = "^0.0.352"
-pyautogen = "^0.2.2"
-pymemgpt = "^0.2.7"
+pyautogen = {extras = ["teachable"], version = "^0.2.2"}
 ipykernel = "^6.27.1"
 ipywidgets = "^8.1.1"
 duckduckgo-search = "^4.1.0"
+beautifulsoup4 = "^4.12.2"
+chainlit = "^0.7.700"
+wandb = "^0.16.1"
 
 [tool.poetry.dev-dependencies]
 

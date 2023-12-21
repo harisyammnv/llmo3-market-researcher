@@ -3,3 +3,6 @@
 .env
 OAI_CONFIG_LIST
 openai_config
+mem-gpt
+__pycache__
+workspace

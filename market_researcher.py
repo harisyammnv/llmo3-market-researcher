@@ -1,7 +1,7 @@
 import os
 import requests
 from langchain.text_splitter import RecursiveCharacterTextSplitter
-from langchain.prompts import PromptTemplate
+from langchain.prompts import ChatPromptTemplate
 from langchain.chains.summarize import load_summarize_chain
 from bs4 import BeautifulSoup
 from langchain.chat_models import ChatOpenAI
@@ -46,17 +46,20 @@ def google_search(search_keyword):
 
 # Function for scraping
 def summary(objective, content):
-    llm = ChatOpenAI(temperature = 0, model = "gpt-3.5-turbo-16k-0613")
+    llm = ChatOpenAI(temperature = 0, model = "gpt-3.5-turbo-16k-0613", streaming=True)
 
     text_splitter = RecursiveCharacterTextSplitter(separators=["\n\n", "\n"], chunk_size = 10000, chunk_overlap=500)
     docs = text_splitter.create_documents([content])
     
     map_prompt = """
-    Write a summary of the following text for {objective}:
-    "{text}"
-    SUMMARY:
+    Please write a summary of the given text, separating the objective and text within HTML tags as follows:
+    <objective> Objective: {objective} </objective>
+    <text> Text: {text} </text>
+    In your summary, ensure to accurately capture the main points and key information from the text 
+    while using the specified HTML tags to enclose the objective and text sections. 
+    Your summary should provide a clear and concise overview of the text, highlighting its essential elements and key details.
     """
-    map_prompt_template = PromptTemplate(template=map_prompt, input_variables=["text", "objective"])
+    map_prompt_template = ChatPromptTemplate.from_template(template=map_prompt)
     
     summary_chain = load_summarize_chain(
         llm=llm, 
@@ -193,14 +196,14 @@ research_director.register_function(
     }
 )
 
+if __name__ == "__main__":
+    # Create group chat
+    groupchat = autogen.GroupChat(agents=[user_proxy, market_researcher, research_manager, research_director], messages=[], max_round=15)
+    group_chat_manager = autogen.GroupChatManager(groupchat=groupchat, llm_config={"config_list": config_list})
 
-# Create group chat
-groupchat = autogen.GroupChat(agents=[user_proxy, market_researcher, research_manager, research_director], messages=[], max_round=15)
-group_chat_manager = autogen.GroupChatManager(groupchat=groupchat, llm_config={"config_list": config_list})
 
-
-# ------------------ start conversation ------------------ #
-message = """
-Research the funding stage/amount & pricing for each company in the list: https://airtable.com/app3j1GszyrlqvYXr/tblIkhp07k1GhfXB3/viwHhoh2vs14nJCrm?blocks=hide
-"""
-user_proxy.initiate_chat(group_chat_manager, message=message)
+    # ------------------ start conversation ------------------ #
+    message = """
+    Research the funding stage/amount & pricing for each company in the list: https://airtable.com/app3j1GszyrlqvYXr/tblIkhp07k1GhfXB3/viwHhoh2vs14nJCrm?blocks=hide
+    """
+    user_proxy.initiate_chat(group_chat_manager, message=message)
