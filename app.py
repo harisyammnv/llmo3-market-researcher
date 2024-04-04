@@ -6,6 +6,10 @@ import chainlit as cl
 from market_researcher import *
 
 welcome_message = """Welcome to the Market Research bot developed for LLMops3 Final Project !!!
+- Provide the user message with user queries filled in an Airtable
+- The `Research Director` bot will be using the `Airtable` Link to get the list of research objectives
+- Then `Research Manager` bot will delegates and evalutes task from the `Market Research`
+- The `Market Research` bot uses various tools like `DuckDuckGo Search`, `Browserless API` scraping and `Summarization` chain to do market research
 """
 
 TASK = """
