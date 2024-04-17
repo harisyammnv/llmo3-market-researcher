@@ -5,7 +5,7 @@ description = ""
 authors = ["HarisyamManda <mnv.harisyam@gmail.com>"]
 
 [tool.poetry.dependencies]
-python = ">=3.11,<3.12"
+python = ">=3.10,<3.12"
 openai = "^1.6.0"
 langchain = "^0.0.352"
 pyautogen = {extras = ["teachable"], version = "^0.2.2"}
